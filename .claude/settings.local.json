@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(echo:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(open http://localhost:5173)",
+      "Bash(ls:*)",
+      "Bash(npx vercel:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill -9:*)",
+      "Bash(npx surge:*)",
+      "Bash(npx:*)",
+      "Bash(pkill:*)",
+      "Bash(gh auth:*)",
+      "Bash(git -C /Users/michaelahalliwell/hcss-prototype status:*)",
+      "Bash(/Users/michaelahalliwell/hcss-prototype/.gitignore:*)",
+      "Bash(curl:*)",
+      "Bash(unzip:*)",
+      "Bash(GH=/tmp/gh-install/gh_2.64.0_macOS_arm64/bin/gh)",
+      "Bash($GH auth login --web --hostname github.com)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash($GH api user --jq '.login, .email, .name')",
+      "Bash($GH api user/emails --jq '.[0].email')",
+      "Bash(git config:*)"
+    ]
+  }
+}

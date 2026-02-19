@@ -1,0 +1,389 @@
+/* ─── Reset & Base ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── App Shell ────────────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f0f2f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ─── Header ───────────────────────────────────────────────────────── */
+.header {
+  background: #1a2b3c;
+  color: white;
+  padding: 0 1.5rem;
+  height: 60px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-mark {
+  width: 36px;
+  height: 36px;
+  background: #f59e0b;
+  color: #1a2b3c;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.header-title {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.header-subtitle {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ─── Chat Area ────────────────────────────────────────────────────── */
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem 0;
+}
+
+.messages {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-bottom: 1rem;
+}
+
+/* ─── Messages ─────────────────────────────────────────────────────── */
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.assistant-avatar {
+  background: #1a2b3c;
+  color: #f59e0b;
+}
+
+.user-avatar {
+  background: #3b82f6;
+  color: white;
+}
+
+.bubble-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: min(75%, 640px);
+}
+
+.message.user .bubble-wrapper {
+  align-items: flex-end;
+}
+
+.bubble {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  line-height: 1.55;
+  font-size: 0.9rem;
+}
+
+.user-bubble {
+  background: #3b82f6;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.user-bubble p {
+  margin: 0;
+}
+
+.assistant-bubble {
+  background: white;
+  color: #1e293b;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* ─── Markdown Rendering in Bubbles ────────────────────────────────── */
+.assistant-bubble p {
+  margin: 0 0 0.6em;
+}
+.assistant-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.assistant-bubble strong {
+  font-weight: 700;
+}
+
+.assistant-bubble table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin: 0.5em 0;
+}
+
+.assistant-bubble th {
+  background: #f1f5f9;
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.assistant-bubble td {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+.assistant-bubble tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+.assistant-bubble ul, .assistant-bubble ol {
+  margin: 0.4em 0 0.4em 1.2em;
+}
+
+.assistant-bubble li {
+  margin-bottom: 0.2em;
+}
+
+.assistant-bubble h1, .assistant-bubble h2, .assistant-bubble h3 {
+  margin: 0.6em 0 0.4em;
+  font-size: 1em;
+  color: #0f172a;
+}
+
+.assistant-bubble h1:first-child,
+.assistant-bubble h2:first-child,
+.assistant-bubble h3:first-child {
+  margin-top: 0;
+}
+
+/* ─── Typing indicator ─────────────────────────────────────────────── */
+.bubble.typing {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  border-bottom-left-radius: 4px;
+}
+
+.bubble.typing span {
+  width: 7px;
+  height: 7px;
+  background: #94a3b8;
+  border-radius: 50%;
+  animation: bounce 1.2s infinite;
+}
+
+.bubble.typing span:nth-child(2) { animation-delay: 0.2s; }
+.bubble.typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}
+
+/* ─── Timestamp ────────────────────────────────────────────────────── */
+.timestamp {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+  padding: 0 0.2rem;
+}
+.timestamp.left { text-align: left; }
+.timestamp.right { text-align: right; }
+
+/* ─── Suggestion Chips ─────────────────────────────────────────────── */
+.suggestions {
+  max-width: 900px;
+  width: 100%;
+  margin: 0.5rem auto 1.5rem;
+}
+
+.suggestions-label {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-bottom: 0.6rem;
+  padding-left: 2.75rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-left: 2.75rem;
+}
+
+.chip {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.chip:hover {
+  background: #1a2b3c;
+  color: white;
+  border-color: #1a2b3c;
+}
+
+/* ─── Input Area ───────────────────────────────────────────────────── */
+.input-area {
+  background: white;
+  border-top: 1px solid #e2e8f0;
+  padding: 0.85rem 1rem 0.75rem;
+  flex-shrink: 0;
+}
+
+.input-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.input-box {
+  flex: 1;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+  color: #1e293b;
+  background: #f8fafc;
+  line-height: 1.5;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.input-box:focus {
+  border-color: #3b82f6;
+  background: white;
+}
+
+.input-box::placeholder {
+  color: #94a3b8;
+}
+
+.send-btn {
+  width: 40px;
+  height: 40px;
+  background: #1a2b3c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  padding: 0;
+}
+
+.send-btn:hover:not(:disabled) {
+  background: #3b82f6;
+}
+
+.send-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.send-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.input-hint {
+  max-width: 900px;
+  margin: 0.35rem auto 0;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  padding-left: 0.1rem;
+}
