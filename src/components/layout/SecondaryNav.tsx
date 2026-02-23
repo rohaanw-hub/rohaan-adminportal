@@ -52,13 +52,13 @@ const integrationItems: NavItem[] = [
 ]
 
 const setupItems: NavItem[] = [
-  { kind: 'tab', label: 'Employees',      icon: UserSquare, tabValue: 'employees',      isDefault: true },
-  { kind: 'tab', label: 'Equipment',      icon: Wrench,     tabValue: 'equipment' },
-  { kind: 'tab', label: 'Materials',      icon: Package,    tabValue: 'materials' },
-  { kind: 'tab', label: 'Locations',      icon: MapPin,     tabValue: 'locations' },
-  { kind: 'tab', label: 'Cost Structures',icon: DollarSign, tabValue: 'costStructures' },
-  { kind: 'tab', label: 'Business Units', icon: Building,   tabValue: 'businessUnits' },
+  { kind: 'tab', label: 'Business Units', icon: Building,   tabValue: 'businessUnits',  isDefault: true },
+  { kind: 'tab', label: 'Employees',      icon: UserSquare, tabValue: 'employees' },
+  { kind: 'tab', label: 'Assets',         icon: Wrench,     tabValue: 'assets' },
   { kind: 'tab', label: 'Jobs',           icon: Briefcase,  tabValue: 'jobs' },
+  { kind: 'tab', label: 'Locations',      icon: MapPin,     tabValue: 'locations' },
+  { kind: 'tab', label: 'Materials',      icon: Package,    tabValue: 'materials' },
+  { kind: 'tab', label: 'Cost Structures',icon: DollarSign, tabValue: 'costStructures' },
   { kind: 'tab', label: 'Co. Defaults',   icon: Settings,   tabValue: 'companyDefaults' },
 ]
 

@@ -7,9 +7,10 @@ interface SheetProps {
   onOpenChange: (open: boolean) => void
   children: React.ReactNode
   side?: 'right' | 'left'
+  className?: string
 }
 
-function Sheet({ open, onOpenChange, children, side = 'right' }: SheetProps) {
+function Sheet({ open, onOpenChange, children, side = 'right', className }: SheetProps) {
   React.useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
@@ -35,7 +36,8 @@ function Sheet({ open, onOpenChange, children, side = 'right' }: SheetProps) {
             ? 'translate-x-0'
             : side === 'right'
             ? 'translate-x-full'
-            : '-translate-x-full'
+            : '-translate-x-full',
+          className
         )}
       >
         {children}

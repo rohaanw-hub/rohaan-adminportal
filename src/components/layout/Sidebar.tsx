@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import {
   Users,
   CreditCard,
@@ -6,7 +6,6 @@ import {
   Plug,
   Database,
   Settings,
-  Building2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Avatar } from '@/components/ui/avatar'
@@ -20,7 +19,22 @@ const navItems = [
   { label: 'System Settings', path: '/settings', icon: Settings },
 ]
 
+const setupSubItems = [
+  { label: 'Business Units', tab: 'businessUnits' },
+  { label: 'Employees', tab: 'employees' },
+  { label: 'Assets', tab: 'assets' },
+  { label: 'Jobs', tab: 'jobs' },
+  { label: 'Locations', tab: 'locations' },
+  { label: 'Materials', tab: 'materials' },
+  { label: 'Cost Structures', tab: 'costStructures' },
+  { label: 'Co. Defaults', tab: 'companyDefaults' },
+]
+
 export function Sidebar() {
+  const location = useLocation()
+  const isSetupActive = location.pathname === '/setup'
+  const activeTab = new URLSearchParams(location.search).get('tab') ?? 'employees'
+
   return (
     <aside className="fixed inset-y-0 left-0 z-30 flex w-60 flex-col bg-[#0f2137]">
       {/* Logo */}
@@ -40,21 +54,40 @@ export function Sidebar() {
           Modules
         </div>
         {navItems.map(({ label, path, icon: Icon }) => (
-          <NavLink
-            key={path}
-            to={path}
-            className={({ isActive }) =>
-              cn(
-                'flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors mb-0.5',
-                isActive
-                  ? 'bg-white/10 text-white'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
-              )
-            }
-          >
-            <Icon className="h-4 w-4 shrink-0" />
-            <span className="truncate">{label}</span>
-          </NavLink>
+          <div key={path}>
+            <NavLink
+              to={path}
+              className={({ isActive }) =>
+                cn(
+                  'flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors mb-0.5',
+                  isActive
+                    ? 'bg-white/10 text-white'
+                    : 'text-white/60 hover:bg-white/5 hover:text-white'
+                )
+              }
+            >
+              <Icon className="h-4 w-4 shrink-0" />
+              <span className="truncate">{label}</span>
+            </NavLink>
+            {path === '/setup' && isSetupActive && (
+              <div className="ml-3 mb-1">
+                {setupSubItems.map(({ label, tab }) => (
+                  <NavLink
+                    key={tab}
+                    to={`/setup?tab=${tab}`}
+                    className={cn(
+                      'flex items-center rounded-md px-3 py-2 text-sm transition-colors mb-0.5',
+                      activeTab === tab
+                        ? 'bg-white/10 text-white'
+                        : 'text-white/50 hover:bg-white/5 hover:text-white/80'
+                    )}
+                  >
+                    {label}
+                  </NavLink>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
       </nav>
 

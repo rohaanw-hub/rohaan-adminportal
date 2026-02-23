@@ -38,19 +38,81 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
 )
 TableRow.displayName = 'TableRow'
 
-const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => (
+// ── Resizable TableHead ────────────────────────────────────────────────────
+
+function TableHead({ className, children, ...props }: React.ThHTMLAttributes<HTMLTableCellElement>) {
+  const thRef = React.useRef<HTMLTableCellElement>(null)
+
+  const getTable = (): HTMLTableElement | null =>
+    (thRef.current?.closest('table') as HTMLTableElement) ?? null
+
+  /** Snapshot all th widths and switch table to fixed layout (idempotent). */
+  const lockLayout = () => {
+    const table = getTable()
+    if (!table || table.style.tableLayout === 'fixed') return
+    const ths = Array.from(table.querySelectorAll<HTMLTableCellElement>('thead th'))
+    ths.forEach(th => { th.style.width = `${th.offsetWidth}px` })
+    table.style.tableLayout = 'fixed'
+    table.style.width = `${table.offsetWidth}px`
+  }
+
+  /** Mousedown on the resize handle — drag to resize. */
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const th = thRef.current
+    if (!th) return
+    lockLayout()
+
+    const startX = e.clientX
+    const startW = th.offsetWidth
+    let moved = false
+
+    document.body.style.userSelect = 'none'
+    document.body.style.cursor = 'col-resize'
+
+    const onMove = (ev: MouseEvent) => {
+      const delta = ev.clientX - startX
+      if (!moved && Math.abs(delta) < 3) return
+      moved = true
+      th.style.width = `${Math.max(48, startW + delta)}px`
+    }
+
+    const onUp = () => {
+      document.body.style.userSelect = ''
+      document.body.style.cursor = ''
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseup', onUp)
+    }
+
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
+
+  return (
     <th
-      ref={ref}
+      ref={thRef}
       className={cn(
-        'h-10 px-4 text-left align-middle font-medium text-gray-500 text-xs uppercase tracking-wide [&:has([role=checkbox])]:pr-0',
+        'relative h-10 px-4 text-left align-middle font-medium text-gray-500 text-xs uppercase tracking-wide [&:has([role=checkbox])]:pr-0',
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {/* Resize handle — 8 px hit zone on the right edge */}
+      <div
+        className="absolute right-0 top-0 h-full w-2 cursor-col-resize select-none z-10 group flex items-center justify-center"
+        onMouseDown={handleMouseDown}
+        title="Drag to resize"
+      >
+        <div className="h-4 w-px rounded-full bg-transparent group-hover:bg-blue-400 transition-colors duration-100" />
+      </div>
+    </th>
   )
-)
+}
 TableHead.displayName = 'TableHead'
+
+// ──────────────────────────────────────────────────────────────────────────
 
 const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
   ({ className, ...props }, ref) => (

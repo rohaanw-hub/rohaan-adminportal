@@ -6,7 +6,6 @@ import { Avatar } from '@/components/ui/avatar'
 
 const modules = [
   { label: 'Access Management',    path: '/access' },
-  { label: 'Auditing',             path: '/audit' },
   { label: 'Billing & Subscriptions', path: '/billing' },
   { label: 'Insights',             path: '/insights' },
   { label: 'Integrations & APIs',  path: '/integrations' },

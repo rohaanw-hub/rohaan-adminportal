@@ -147,9 +147,49 @@ export interface Employee {
   status: EmployeeStatus
   hireDate: string
   assignedApps: AppName[]
+  // Common Data
+  code?: string
+  firstName?: string
+  middleInitial?: string
+  lastName?: string
+  suffix?: string
+  email?: string
+  active?: boolean
+  payClass?: string
+  address1?: string
+  address2?: string
+  city?: string
+  state?: string
+  zip?: string
+  country?: string
+  phone?: string
+  mobilePhone?: string
+  otherPhone?: string
+  employeeType?: string
+  // HJ Fields
+  salaried?: boolean
+  assignedEquipment?: string
+  costAdjustments?: string
+  jobAssignments?: string
+  hjAccountingCode?: string
+  // Dispatcher Fields
+  hideEmployee?: boolean
+  homeRegion?: string
+  dispatcherStatus?: string
+  dispatcherPhone?: string
+  county?: string
+  hourlyRate?: string
+  dispatcherAccountingCode?: string
+  generalNote?: string
+  restrictions?: string
+  comments?: string
+  // Resource Planner
+  rpRestrictions?: string
+  rpComments?: string
+  businessUnits?: string[]
 }
 
-export interface Equipment {
+export interface Asset {
   assetId: string
   name: string
   type: string
@@ -157,7 +197,80 @@ export interface Equipment {
   status: 'Active' | 'In Maintenance' | 'Retired'
   location: string
   year: number
-  operator: string
+  assignedApps?: AppName[]
+  // Common Data
+  code?: string
+  rentalFlag?: boolean
+  fuelerFlag?: boolean
+  eqActiveFlag?: boolean
+  description?: string
+  serialNumber?: string
+  vinNumber?: string
+  make?: string
+  model?: string
+  gpsId?: string
+  accountingCode?: string
+  licensePlate?: string
+  licensedState?: string
+  height?: string
+  weight?: string
+  length?: string
+  width?: string
+  purchaseValue?: string
+  fuelCapacity?: string
+  numberOfAxles?: string
+  purchaseDate?: string
+  // HJ Fields
+  hjJobAssignments?: string
+  // Telematics
+  dashcam?: string
+  fuelType?: string
+  expectedConsumptionRate?: string
+  expectedConsumptionRateType?: string
+  expectedRunTime?: string
+  ratePerHour?: string
+  ownershipCostPerHour?: string
+  operatingCostPerHour?: string
+  enableMobileGeofence?: boolean
+  mobileGeofenceSize?: string
+  assignedDriver?: string
+  odometer?: string
+  meter?: string
+  // E360
+  isAttachment?: boolean
+  leasedFlag?: boolean
+  partTaxExemptFlag?: boolean
+  serviceEquipmentFlag?: boolean
+  e360Location?: string
+  e360Job?: string
+  foreman?: string
+  region?: string
+  division?: string
+  color?: string
+  e360AssignedDriver?: string
+  purchasedFrom?: string
+  defaultMechanic?: string
+  tireSizeFront?: string
+  tireSizeRear?: string
+  defaultFuel?: string
+  engineMake?: string
+  engineSerialNo?: string
+  engineTier?: string
+  engineRatedPowerKw?: string
+  engineRatedPowerHp?: string
+  engineArrangement?: string
+  engineTransmissionSerialNo?: string
+  replacementCycle?: string
+  hoursPerYear?: string
+  equipmentBudget?: string
+  // Dispatcher
+  hideEquipment?: boolean
+  gvwr?: string
+  gcwr?: string
+  maximumHaulingCapacity?: string
+  eqHourlyRate?: string
+  eqPurchaseDate?: string
+  businessUnits?: string[]
 }
 
 export interface Material {

@@ -14,13 +14,7 @@ export default function App() {
         <Route element={<Shell />}>
           <Route index element={<Navigate to="/access" replace />} />
           <Route path="/access/*" element={<AccessManagement />} />
-          <Route path="/audit" element={
-            <div className="p-6">
-              <h1 className="text-2xl font-bold text-gray-900">Auditing</h1>
-              <p className="text-sm text-gray-500 mt-1">Audit logs and compliance reporting — coming soon</p>
-            </div>
-          } />
-          <Route path="/billing/*" element={<Billing />} />
+<Route path="/billing/*" element={<Billing />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/integrations/*" element={<Integrations />} />
           <Route path="/setup" element={<SetupData />} />
