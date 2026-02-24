@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { Asset, AppName } from '@/types'
 import { businessUnits as buList } from '@/data/setupData'
+import { CATEGORIES } from '@/lib/products'
 import { Sheet, SheetHeader, SheetTitle, SheetClose, SheetContent, SheetFooter } from '@/components/ui/sheet'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
@@ -19,33 +20,41 @@ interface AssetPanelProps {
 
 type AssetTab = 'common' | 'hj' | 'telematics' | 'e360' | 'dispatcher'
 
-const ALL_APPS: AppName[] = ['HeavyJob', 'HeavyBid', 'HeavyConnect', 'Dispatcher', 'telematics', 'Safety']
-const APP_LABELS: Record<AppName, string> = {
-  HeavyJob: 'HeavyJob', HeavyBid: 'HeavyBid', HeavyConnect: 'HeavyConnect',
-  Dispatcher: 'Dispatcher', telematics: 'Telematics', Safety: 'Safety',
+const ACTIVE_COLORS: Record<string, string> = {
+  HeavyBid: 'bg-green-100 text-green-800 border-green-200',
+  HeavyJob: 'bg-blue-100 text-blue-800 border-blue-200',
+  Fleet:    'bg-teal-100 text-teal-800 border-teal-200',
+  Platform: 'bg-purple-100 text-purple-800 border-purple-200',
 }
 
 function AppToggle({ apps, onChange }: { apps: AppName[]; onChange: (a: AppName[]) => void }) {
   return (
-    <div className="flex flex-wrap gap-1.5">
-      {ALL_APPS.map(app => {
-        const active = apps.includes(app)
-        return (
-          <button
-            key={app}
-            type="button"
-            onClick={() => onChange(active ? apps.filter(a => a !== app) : [...apps, app])}
-            className={cn(
-              'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border transition-colors',
-              active
-                ? 'bg-blue-100 text-blue-800 border-blue-200'
-                : 'bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100 hover:text-gray-600'
-            )}
-          >
-            {APP_LABELS[app]}
-          </button>
-        )
-      })}
+    <div className="space-y-3">
+      {CATEGORIES.map(cat => (
+        <div key={cat.name}>
+          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">{cat.name}</div>
+          <div className="flex flex-wrap gap-1.5">
+            {cat.products.map(app => {
+              const active = apps.includes(app)
+              return (
+                <button
+                  key={app}
+                  type="button"
+                  onClick={() => onChange(active ? apps.filter(a => a !== app) : [...apps, app])}
+                  className={cn(
+                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border transition-colors',
+                    active
+                      ? ACTIVE_COLORS[cat.name]
+                      : 'bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100 hover:text-gray-600'
+                  )}
+                >
+                  {app}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

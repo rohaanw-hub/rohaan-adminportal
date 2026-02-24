@@ -1,8 +1,9 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { UsersPage } from './UsersPage'
-import { GroupsPage } from './GroupsPage'
 import { RolesPage } from './RolesPage'
 import { PoliciesPage } from './PoliciesPage'
+import { LicenseAssignmentPage } from './LicenseAssignmentPage'
+import { GroupProductPage } from './GroupProductPage'
 
 export function AccessManagement() {
   return (
@@ -13,8 +14,12 @@ export function AccessManagement() {
       </div>
       <Routes>
         <Route index element={<UsersPage />} />
-        <Route path="groups" element={<GroupsPage />} />
-        <Route path="roles" element={<RolesPage />} />
+        <Route path="groups" element={<Navigate to="/access/groups/license-assignment" replace />} />
+        <Route path="groups/license-assignment" element={<LicenseAssignmentPage />} />
+        <Route path="groups/heavybid"   element={<GroupProductPage product="HeavyBid" />} />
+        <Route path="groups/heavyjob"   element={<GroupProductPage product="HeavyJob" />} />
+        <Route path="groups/telematics" element={<GroupProductPage product="Telematics" />} />
+        <Route path="roles"    element={<RolesPage />} />
         <Route path="policies" element={<PoliciesPage />} />
         <Route path="*" element={<Navigate to="/access" replace />} />
       </Routes>

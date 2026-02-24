@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
-const APPS = ['HeavyJob', 'HeavyBid', 'HeavyConnect', 'Dispatcher', 'Safety', 'Billing']
+const APPS = ['HeavyBid', 'HeavyJob', 'Fleet', 'Platform']
 const PERMS = ['View', 'Edit', 'Delete', 'Approve', 'Admin']
 
 function PermCell({ value, onToggle }: { value: boolean; onToggle: () => void }) {

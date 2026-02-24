@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import {
-  ChevronLeft, ChevronRight,
+  ChevronLeft, ChevronRight, ChevronDown,
   Users, UserCircle, Shield, FileText,
   CreditCard, Receipt, Wallet,
   Plug, Key, Webhook, List, AlertCircle, GitMerge,
@@ -27,11 +27,28 @@ type TabItem = {
   isDefault?: boolean
 }
 
-type NavItem = RouteItem | TabItem
+type DropdownItem = {
+  kind: 'dropdown'
+  label: string
+  icon: React.ElementType
+  children: { label: string; path: string }[]
+}
+
+type NavItem = RouteItem | TabItem | DropdownItem
 
 const accessItems: NavItem[] = [
   { kind: 'route', label: 'Users',    icon: Users,      path: '/access',          end: true },
-  { kind: 'route', label: 'Groups',   icon: UserCircle, path: '/access/groups' },
+  {
+    kind: 'dropdown',
+    label: 'Groups',
+    icon: UserCircle,
+    children: [
+      { label: 'License Assignment', path: '/access/groups/license-assignment' },
+      { label: 'HeavyBid',           path: '/access/groups/heavybid' },
+      { label: 'HeavyJob',           path: '/access/groups/heavyjob' },
+      { label: 'Telematics',         path: '/access/groups/telematics' },
+    ],
+  },
   { kind: 'route', label: 'Roles',    icon: Shield,     path: '/access/roles' },
   { kind: 'route', label: 'Policies', icon: FileText,   path: '/access/policies' },
 ]
@@ -82,6 +99,7 @@ const MODULE_KEYS = ['/access', '/billing', '/integrations', '/setup', '/setting
 
 export function SecondaryNav() {
   const [collapsed, setCollapsed] = useState(false)
+  const [openDropdowns, setOpenDropdowns] = useState<Set<string>>(new Set())
   const loc = useLocation()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -137,6 +155,60 @@ export function SecondaryNav() {
                 <Icon className="h-4 w-4 shrink-0" />
                 {!collapsed && <span className="truncate">{item.label}</span>}
               </NavLink>
+            )
+          }
+
+          if (item.kind === 'dropdown') {
+            const anyChildActive = item.children.some(c => loc.pathname.startsWith(c.path))
+            const isOpen = openDropdowns.has(item.label) || anyChildActive
+            const toggle = () => {
+              if (anyChildActive) return
+              setOpenDropdowns(prev => {
+                const next = new Set(prev)
+                next.has(item.label) ? next.delete(item.label) : next.add(item.label)
+                return next
+              })
+            }
+            return (
+              <div key={item.label}>
+                <button
+                  className={cn(
+                    'flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-colors w-full',
+                    anyChildActive
+                      ? 'text-blue-700 font-medium'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  )}
+                  onClick={toggle}
+                  title={collapsed ? item.label : undefined}
+                >
+                  <Icon className="h-4 w-4 shrink-0" />
+                  {!collapsed && (
+                    <>
+                      <span className="flex-1 truncate text-left">{item.label}</span>
+                      <ChevronDown className={cn('h-3.5 w-3.5 shrink-0 transition-transform duration-150', isOpen && 'rotate-180')} />
+                    </>
+                  )}
+                </button>
+                {isOpen && !collapsed && (
+                  <div className="ml-6 mt-0.5 flex flex-col gap-0.5">
+                    {item.children.map(child => (
+                      <NavLink
+                        key={child.path}
+                        to={child.path}
+                        end
+                        className={({ isActive }) => cn(
+                          'block rounded-md px-2.5 py-1.5 text-sm transition-colors',
+                          isActive
+                            ? 'bg-blue-50 text-blue-700 font-medium'
+                            : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                        )}
+                      >
+                        {child.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
             )
           }
 

@@ -7,6 +7,7 @@ import {
   materials, locations, costStructures, businessUnits, jobs,
 } from '@/data/setupData'
 import { Employee, Asset, AppName } from '@/types'
+import { PRODUCT_CATEGORY, CATEGORY_BADGE_VARIANT } from '@/lib/products'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -16,11 +17,6 @@ import { Select } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { EmployeePanel } from './EmployeePanel'
 import { AssetPanel } from './AssetPanel'
-
-const APP_LABELS: Record<AppName, string> = {
-  HeavyJob: 'HeavyJob', HeavyBid: 'HeavyBid', HeavyConnect: 'HeavyConnect',
-  Dispatcher: 'Dispatcher', telematics: 'Telematics', Safety: 'Safety',
-}
 
 const BU_LABELS: Record<string, string> = {
   GCO: 'Gulf Coast Ops',
@@ -33,16 +29,20 @@ const BU_LABELS: Record<string, string> = {
 function AppBadges({ apps = [] }: { apps?: AppName[] }) {
   return (
     <div className="flex flex-wrap gap-1">
-      {apps.slice(0, 2).map(a => (
-        <Badge key={a} variant="info" className="text-xs">{APP_LABELS[a]}</Badge>
-      ))}
+      {apps.slice(0, 2).map(a => {
+        const cat = PRODUCT_CATEGORY[a]
+        const variant = cat ? CATEGORY_BADGE_VARIANT[cat] : 'secondary'
+        return <Badge key={a} variant={variant} className="text-xs">{a}</Badge>
+      })}
       {apps.length > 2 && (
         <div className="relative group">
           <Badge variant="outline" className="text-xs cursor-default">+{apps.length - 2}</Badge>
           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col gap-1 bg-white border border-gray-200 rounded-md shadow-lg p-2 z-50 min-w-max">
-            {apps.slice(2).map(a => (
-              <Badge key={a} variant="info" className="text-xs">{APP_LABELS[a]}</Badge>
-            ))}
+            {apps.slice(2).map(a => {
+              const cat = PRODUCT_CATEGORY[a]
+              const variant = cat ? CATEGORY_BADGE_VARIANT[cat] : 'secondary'
+              return <Badge key={a} variant={variant} className="text-xs">{a}</Badge>
+            })}
           </div>
         </div>
       )}

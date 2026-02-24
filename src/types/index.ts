@@ -1,7 +1,11 @@
 // ── Access Management ──────────────────────────────────────────────
 
 export type UserStatus = 'Active' | 'Inactive' | 'Pending'
-export type AppName = 'HeavyJob' | 'HeavyBid' | 'HeavyConnect' | 'Dispatcher' | 'telematics' | 'Safety'
+export type AppName =
+  | 'Estimating' | 'Quotes' | 'Pre-Construction' | 'Desktop'
+  | 'Manager' | 'Safety' | 'Skills' | 'Forms' | 'Docs & Plans' | 'myField' | 'Resource Planner'
+  | 'Telematics' | 'Maintenance'
+  | 'Chats' | 'Copilot' | 'Additional Access'
 
 export interface User {
   id: string
@@ -15,6 +19,12 @@ export interface User {
   department: string
   phone: string
   avatar?: string
+  userId: string
+  jobTitle: string
+  businessUnitAccess: string[]
+  homeBusinessUnit: string
+  jobAccess: 'All' | string[]
+  employeeCode?: string
 }
 
 export interface Group {
@@ -53,7 +63,7 @@ export type InvoiceStatus = 'Paid' | 'Due' | 'Failed' | 'Processing'
 
 export interface ProductSubscription {
   id: string
-  name: AppName
+  name: string
   tier: PlanTier
   seatsUsed: number
   seatsLicensed: number
